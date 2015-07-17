@@ -1,0 +1,10 @@
+---
+- include: install/debian-deps.yml
+  when: ansible_os_family == 'Debian'
+
+- include: install/redhat-deps.yml
+  when: ansible_os_family == 'RedHat'
+
+- include: install/erln8.yml
+
+- include: path.yml

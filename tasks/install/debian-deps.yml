@@ -1,0 +1,42 @@
+---
+- name: Ensure dependencies are installed.
+  apt:
+    name: "{{ item }}"
+    update_cache: yes
+    state: present
+  with_items:
+    - build-essential
+    - libncurses5-dev
+    - openssl
+    - libssl-dev
+    - fop
+    - xsltproc
+    - unixodbc-dev
+    - libglib2.0-dev
+    - git
+    - autoconf
+    - xdg-utils
+
+- name: Ensure the D assets are present.
+  get_url:
+    url: "{{ item }}"
+    dest: /tmp
+  with_items:
+    - http://code.dlang.org/files/dub-0.9.23-linux-x86_64.tar.gz
+    - http://downloads.dlang.org/releases/2.x/2.067.1/dmd_2.067.1-0_amd64.deb
+
+- name: Ensure the dmd package is installed.
+  apt:
+    deb: /tmp/dmd_2.067.1-0_amd64.deb
+
+- name: Ensure the dub package is unpacked.
+  unarchive:
+    src: /tmp/dub-0.9.23-linux-x86_64.tar.gz
+    dest: /tmp
+    copy: no
+
+- name: Ensure the dub package is installed.
+  command: mv /tmp/dub /usr/local/bin/dub
+  args:
+    creates: /usr/local/bin/dub
+    removes: /tmp/dub

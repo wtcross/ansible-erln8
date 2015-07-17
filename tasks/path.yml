@@ -1,0 +1,26 @@
+---
+- name: Detect if bashrc is present.
+  sudo_user: "{{ erln8_user }}"
+  stat:
+    path: ~/.bashrc
+  register: bashrc
+
+- name: Detect if zshrc is present.
+  sudo_user: "{{ erln8_user }}"
+  stat:
+    path: ~/.zshrc
+  register: zshrc
+
+- name: Ensure that ~/.erln8.d/bin is in PATH when using bash.
+  sudo_user: "{{ erln8_user }}"
+  lineinfile:
+    dest: ~/.bashrc
+    line: export PATH="$PATH:$HOME/.erln8.d/bin"
+  when: bashrc.stat.exists
+
+- name: Ensure that ~/.erln8.d/bin is in PATH when using zsh.
+  sudo_user: "{{ erln8_user }}"
+  lineinfile:
+    dest: ~/.zshrc
+    line: export PATH="$PATH:$HOME/.erln8.d/bin"
+  when: zshrc.stat.exists

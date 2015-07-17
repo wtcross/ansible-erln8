@@ -1,0 +1,15 @@
+---
+- name: Ensure the latest version of erln8 is installed.
+  sudo_user: "{{ erln8_user }}"
+  git:
+    repo: "{{ erln8_git_url }}"
+    dest: /tmp/erln8
+    version: "{{ erln8_version }}"
+    accept_hostkey: yes
+
+- name: Ensure erln8 has been built and installed.
+  sudo_user: "{{ erln8_user }}"
+  shell: make && make install
+  args:
+    chdir: /tmp/erln8
+    creates: ~/.erln8.d

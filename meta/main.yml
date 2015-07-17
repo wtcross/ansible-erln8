@@ -1,0 +1,26 @@
+---
+galaxy_info:
+  author: Tyler Cross
+  description: An Ansible role for installing erln8, the sneaky Erlang version manager.
+  issue_tracker_url: https://github.com/wtcross/ansible-erln8/issues
+  license: MIT
+  min_ansible_version: 1.9
+  platforms:
+    - name: EL
+      versions:
+        - 6
+        - 7
+    - name: Fedora
+      versions:
+        - 21
+        - 22
+    - name: Ubuntu
+      versions:
+        - trusty
+        - vivid
+    - name: Debian
+      versions:
+        - jessie
+  categories:
+    - development
+dependencies: []
